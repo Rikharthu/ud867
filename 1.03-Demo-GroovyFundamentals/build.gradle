@@ -22,7 +22,10 @@ selecting View > Syntax > Open all with current extension as... > Groovy
 
 */
 
-task groovy {}
+task groovy {
+    description 'Groovy Demo'
+    group 'Education'
+}
 
 println "Hello Groovy!"
 
