@@ -1,3 +1,4 @@
+// gradle -q hello
 task hello{
     doLast{
         println "Hello world!"
