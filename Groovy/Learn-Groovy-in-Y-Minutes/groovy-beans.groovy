@@ -1,152 +1,4 @@
 /*
-  Set yourself up:
-
-  1) Install SDKMAN - http://sdkman.io/
-  2) Install Groovy: sdk install groovy
-  3) Start the groovy console by typing: groovyConsole
-
-  To run: groovy <filename>
-  groovy learn-groovy-in-y-minutes.groovy
-*/
-
-//  Single line comments start with two forward slashes
-/*
-Multi line comments look like this.
-*/
-
-// Hello World
-println "Hello world!"
-
-/*
-    Variables:
-    You can assign values to variables for later use
-*/
-
-def x=1 // btw, semicolons are optional
-println x
-// println is a method reference, and can be also used as follows:
-System.out.println(x)
-println(x)
-
-// use Java classes:
-x = new java.util.Date()
-println x
-// use class's methods
-// Java code is valid for groovy
-System.out.println(x.toGMTString());
-
-x=-3.1499392
-println x
-
-x = false
-println x
-
-x = "Groovy!"
-println x
-
-/*
-  Collections and maps
-*/
-
-// Creating an empty list
-def technologies = []
-println "technologies is an "+technologies.getClass().getName()
-
-/*** Adding elements to the list ***/
-
-// As with Java
-technologies.add("Grails");
-
-// Left shift adds, and returns the list
-technologies << "Groovy"
-
-// Addition!
-technologies+='Java'
-
-// Add multiple elements
-technologies.addAll(["Gradle","Griffon"])
-
-println technologies
-
-/*** Removing elements from the list ***/
-
-// As with Java
-technologies.remove("Griffon")
-
-// Subtraction also works
-technologies=technologies - 'Grails'
-
-/*** iterating Lists ***/
-
-// Iterate over elements of a list
-technologies.each{
-  // iterator's default name is "it"
-  // dollar sign $ is used for string interpolation
-  println "Technology: $it"
-}
-// Same as:
-// technologies.each{ it->println("Technology: $it") }
-
-technologies.eachWithIndex{it,i -> println "$i: $it"}
-
-/*** Checking List contents ***/
-
-// Evaluate if a list contains element(s) (boolean)
-contained = technologies.contains('Groovy')
-// Or 
-contained = 'Groovy' in technologies
-
-// Check for multiple contents
-technologies.containsAll(['Groovy','Grails'])
-
-/*** Sorting Lists ***/
-
-// Sort a list (mutates original list)
-technologies.sort();
-println(technologies)
-
-// To sort without mutating original, you can do
-sortedTechnologies = technologies.sort(false)
-println(sortedTechnologies)
-
-/*** Manipulating Lists ***/
-
-// Replace all elements in the list
-Collections.replaceAll(technologies,'Gradle','eldarG')
-
-// Shuffle a list
-Collections.shuffle(technologies,new Random())
-
-// Clear a list
-technologies.clear()
-
-// Creating an empty map
-def devMap =[:]
-
-// Add values
-devMap = ['name':'Roberto', 'framework':'Grails', 'language':'Groovy']
-devMap.put('lastName','Perez')
-
-//Iterate over elements of a map
-devMap.each { println "$it.key: $it.value" }
-devMap.eachWithIndex { it, i -> println "$i: $it"}
-
-//Evaluate if a map contains a key
-assert devMap.containsKey('name')
-
-//Evaluate if a map contains a value
-assert devMap.containsValue('Roberto')
-
-//Get the keys of a map
-println devMap.keySet()
-
-//Get the values of a map
-println devMap.values()
-
-// print both keys and values
-println devMap
-
-/*
   Groovy Beans
 
   GroovyBeans are JavaBeans but using a much simpler syntax
@@ -184,6 +36,10 @@ println devMap
 class Foo {
     // read only property (no setter is generated)
     final String name = "Roberto"
+    // can override getter. will be used for calls like foo.name
+    // public String getName(){
+    //     "Name:Roberto"
+    // }
 
     // read only property with public getter (generated) and protected setter (provided our own)
     String language
@@ -193,13 +49,29 @@ class Foo {
     def lastName
 }
 
+// Generates something like that:
+/*
+class Foo{
+    private final String name="Roberto";
+    public String getName();
+
+    private String language;
+    public String getLanguage(){
+        return language;
+    }
+    protected void setLanguage(String language){
+        this.language=language;
+    }
+}
+*/
+
 Foo foo=new Foo();
-println foo.name
+println "Name: $foo.name" // uses getter under the hood
 foo.setLanguage("Groovy")
 foo.language="Java"
-println foo.language
+println "Language: $foo.language"
 foo.lastName="Lopez"
-println foo.lastName
+println "Last name: $foo.lastName"
 
 /*
   Logical Branching and Looping
@@ -231,6 +103,8 @@ println displayName
 
 // For loop
 // Iterate over a range
+range = 0..30
+println "Range class: ${range.class}"
 x=0
 for(i in 0..30){
   x+=i

@@ -22,6 +22,7 @@ task putOnSocks {
 }
 
 task putOnShoes {
+    // you can't put on your shoes before putting on socks
     dependsOn "putOnSocks"
     doLast {
         println "Putting on Shoes."
@@ -43,6 +44,7 @@ relationship between them.
 */
 
 task eatBreakfast {
+    // marks which task should execute after this one
     finalizedBy "brushYourTeeth"
     doLast{
         println "Om nom nom breakfast!"
@@ -79,6 +81,10 @@ task takeShower {
 }
 
 task putOnFragrance {
+    // If this and specified tasks are both queued for execution in gradle
+    // like from command 'gradle putOnFragrance takeshower', then takeShower()
+    // will be executed before putOnFragrance()
+    // Nothing happens if these tasks are executed separately
     shouldRunAfter "takeShower"
     doLast{
         println "Smellin' fresh!"
@@ -100,6 +106,22 @@ task getReady {
     // equals sign
     dependsOn = ["takeShower", "eatBreakfast", "putOnShoes"]
 }
+/*
+> Task :eatBreakfast
+Om nom nom breakfast!
+
+> Task :brushYourTeeth
+Brushie Brushie Brushie.
+
+> Task :putOnSocks
+Putting on Socks.
+
+> Task :putOnShoes
+Putting on Shoes.
+
+> Task :takeShower
+Taking a shower.
+*/
 
 /*
 
@@ -108,7 +130,24 @@ Oops, we put on our shoes before taking a shower! Let's put in another
 
 */
 
+// mustRunAfter is more strict than shouldRunAfter, which sometimes may be omitted
 putOnShoes.mustRunAfter takeShower
+/*
+> Task :eatBreakfast
+Om nom nom breakfast!
+
+> Task :brushYourTeeth
+Brushie Brushie Brushie.
+
+> Task :takeShower
+Taking a shower.
+
+> Task :putOnSocks
+Putting on Socks.
+
+> Task :putOnShoes
+Putting on Shoes.
+*/
 
 /*
 
@@ -124,6 +163,19 @@ task getEquipped {
         println "All geared up!"
     }
 }
+/*
+> Task :putOnFragrance
+Smellin' fresh!
+
+> Task :putOnSocks
+Putting on Socks.
+
+> Task :putOnShoes
+Putting on Shoes.
+
+> Task :getEquipped
+All geared up!
+*/
 
 /*
 

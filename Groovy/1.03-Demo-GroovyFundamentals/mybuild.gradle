@@ -1,0 +1,4 @@
+// To run this file use "gradle -b mybuild.gradle" to specify this as build file
+// to list ALL tasks use  gradle -b .\mybuild.gradle tasks --all
+
+task groovy <<{}

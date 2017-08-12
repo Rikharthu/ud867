@@ -16,7 +16,19 @@ Let's create a task that prints a greeting.
 
 task printGreeting {
     doLast {
-       println greeting
+       println greeting // fetched from gradle.properties
+    }
+}
+
+task printGoodbye {
+    doLast {
+       println goodbye // fetched from gradle.properties
+    }
+}
+
+task printName {
+    doLast {
+       println name // fetched from gradle.properties
     }
 }
 
@@ -48,8 +60,14 @@ that properties defined this way shadow all other definitions.
 
 */
 
+// pass closure to project.ext
 ext {
-    greeting = "Hello from inside the build script"
+    //  greeting = "Hello from a properties file" would override gradle.properties and CLI arguments
+    goodbye = "Goodbye from inside the build script"
+}
+// doesn't override previous ext, just adds values
+ext{
+    name="Vasja"
 }
 
 /*

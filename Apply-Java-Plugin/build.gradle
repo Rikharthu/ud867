@@ -1,0 +1,94 @@
+// More info:
+// Setting up Java project with Gradle https://docs.gradle.org/current/userguide/tutorial_java_projects.html 
+// Gradle Java Plugin Guide https://docs.gradle.org/current/userguide/java_plugin.html 
+
+// Add the Java plugin which contains preconfigured tasks and etc for Java development
+apply plugin: 'java'
+
+/*
+Commonly used tasks:
+assemble - generates 'build' directory which contains compiled .class files and .jar's, but does not run unit tests
+gradle build - most commonly used task which does a full build of the project - compile and test code, create a JAR file containing main classes and resources
+clean - deletes the build directory, removing all built files
+check - compiles and tests your code
+*/
+
+// Gradle expects to find your production source code under src/main/java and your test source code
+// under src/test/java. In addition, any files under src/main/resources will be included in the JAR file as resources
+// and files under src/test/resources will be included in the classpath used to run the tests
+
+
+// ADD DEPENDENCIES
+
+// Java project usually have dependencies on external JAR files. To reference them tell Gradle where to find them
+// In Gradle, artifacts such as JAR files are locaed in a repository, which can be used for fetching/publishing artifacts
+repositories {
+    // use public maven repository
+    mavenCentral()
+}
+
+// Add some dependencies
+dependencies {
+    // Declare production classes compile-time dependencies
+    compile group: 'commons-collections', name: 'commons-collections', version: '3.2.2'
+    // Tests classes's compile time dependencies
+    testCompile group: 'junit', name: 'junit', version: '4.+'
+}
+
+
+// CUSTOMIZE THE PROJECT
+// Java plugin adds a number of properties that have default values set
+// Change some of them:
+sourceCompatibility = 1.7 // Java version
+version ='1.0'
+jar{
+    manifest{ // the manifes to include in all Jars
+        attributes 'Implementation-Title': 'Gradle Quickstart',
+                   'Implementation-Version': version
+    }
+    // see build/tmp/jar/MANIFEST.MF:
+    // Manifest-Version: 1.0
+    // Implementation-Title: Gradle Quickstart
+    // Implementation-Version: 1.0
+}
+// You can also set properties of a task
+// configure the test task, which is of type Test, to add a system property when the tests are executed
+test {
+    systemProperties 'property': 'value'
+}
+
+
+// PUBLISHING THE JAR FILE
+// Usually the JAR file needs to be published somewhere. To do this, you need to tell Gradle 
+// where to publish the JAR file. In Gradle, artifacts such as JAR files are published to repositories. 
+// In our sample, we will publish to a local directory. You can also publish to a remote location, or multiple locations.
+uploadArchives { // task which produce the artifacts in the archives configurationg, inclufing jar
+    repositories {
+       flatDir {
+           dirs 'repos'
+       }
+    }
+}
+
+/*
+PS D:\Workspace\Gradle\ud867\Apply-Java-Plugin> gradle build
+Download https://repo1.maven.org/maven2/commons-collections/commons-collections/3.2.2/commons-collections-3.2.2.pom
+Download https://repo1.maven.org/maven2/org/apache/commons/commons-parent/39/commons-parent-39.pom
+Download https://repo1.maven.org/maven2/org/apache/apache/16/apache-16.pom
+Download https://repo1.maven.org/maven2/commons-collections/commons-collections/3.2.2/commons-collections-3.2.2.jar
+
+> Task :compileJava
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+1 warning
+
+
+BUILD SUCCESSFUL in 3s
+2 actionable tasks: 2 executed
+*/
+
+task execute(type: JavaExec) {
+    // point to our main class
+    main = "com.udacity.gradle.Person"
+    // We'll talk about this shortly
+    classpath = sourceSets.main.runtimeClasspath
+}

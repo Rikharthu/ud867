@@ -6,8 +6,24 @@ build script.
 */
 
 apply plugin: "java"
+/*
+    Added Tasks:
+
+    Build tasks
+    -----------
+    assemble - Assembles the outputs of this project.
+    build - Assembles and tests this project.
+    buildDependents - Assembles and tests this project and all projects that depend on it.
+    buildNeeded - Assembles and tests this project and all projects it depends on.
+    classes - Assembles main classes.
+    clean - Deletes the build directory.
+    jar - Assembles a jar archive containing the main classes.
+    testClasses - Assembles test classes.
+*/
 
 
+// If we run 'gradle assemble', the 'build' directory wil lbe generated with our jar and class files
+// Gradle Java plugin looks for the java source files in src/main/java folder
 
 /*
 
@@ -49,6 +65,7 @@ part of the core Gradle functionality.
 
 
 task execute(type: JavaExec) {
+    // point to our main class
     main = "com.udacity.gradle.Person"
     // We'll talk about this shortly
     classpath = sourceSets.main.runtimeClasspath

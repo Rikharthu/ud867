@@ -21,8 +21,13 @@ in the webOutputDir property via the command line).
 */
 
 task bundleWeb(type: Zip) {
-    baseName = 'web'
+    baseName = archiveName
     destinationDir = file(webOutputDir)
 
+
     from 'src/web'
+}
+
+ext{
+    archiveName="web-archive"
 }

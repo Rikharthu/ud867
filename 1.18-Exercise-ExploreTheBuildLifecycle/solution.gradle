@@ -6,9 +6,22 @@ Code to answer the quiz question in the classroom.
 
 
 task test {
-    doLast {
-        println "1: I'm in ur action"
+    doFirst{
+        println "1: I'm in ur action's doFirst"
     }
-    println "2: I'm in ur configuration closure"
+    doLast {
+        println "2: I'm in ur action's doLast"
+    }
+    println "3: I'm in ur configuration closure"
 }
-println "3: I'm in ur build script"
+println "4: I'm in ur build script"
+
+/*
+> Configure project :
+3: I'm in ur configuration closure
+4: I'm in ur build script
+
+> Task :test
+1: I'm in ur action's doFirst
+2: I'm in ur action's doLast
+*/

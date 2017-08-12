@@ -22,6 +22,8 @@ task first {
     }
 }
 
+println 'Middle top level script element'
+
 task second(dependsOn: first) {
     println 'Second task: Configuration'
 
@@ -30,4 +32,19 @@ task second(dependsOn: first) {
     }
 }
 
-println 'Second top level script element'
+println 'Last top level script element'
+
+/*
+> Configure project :
+First top level script element
+First task: Configuration
+Middle top level script element
+Second task: Configuration
+Last top level script element
+
+> Task :first
+First task: Action
+
+> Task :second
+Second task: Action
+*/

@@ -12,15 +12,15 @@ we'll talk about shortly.
 
 */
 
+// For a task to appear in a call to 'gradle tasks' , task must have a description and/or group
+// to list other tasks, use 'gradle tasks --all'
+
 project.task("myTask1")
 
 /*
-
 Since the entire build script delegates to `project`, we can leave that
 off.
-
 */
-
 task("myTask2")
 
 /*
@@ -82,8 +82,9 @@ also give the task a configuration closure when it's declared.
 */
 
 task myTask6 {
-    description "Here's a task with a configuration block"
+    description "Here's a task with a configuration block" // this actually is a function call to a setter with exact same name (description("..."))
     group "Some group"
+    // we are actually assigning a closure to be executed
     doLast {
         println "Here's the action"
     }
@@ -139,4 +140,26 @@ giving your task a type, that needs to be declared here, and not in a
 configuration block. We'll talk more task types that when we work with file
 system tasks.
 
+*/
+
+/*
+SAMPLE OUTPUT
+
+...
+
+Some group tasks
+----------------
+myTask6 - Here's a task with a configuration block
+myTask7 - Description
+
+This is the heading for this task in the task list, tasks
+---------------------------------------------------------
+myTask4 - This is what's shown in the task list
+
+Other tasks
+-----------
+myTask1
+myTask2
+myTask3
+myTask8 - Another description
 */
