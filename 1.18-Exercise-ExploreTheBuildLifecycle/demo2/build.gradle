@@ -1,0 +1,40 @@
+println 'This is executed during the configuration phase.'
+
+task configured {
+    println 'This is also executed during the configuration phase.'
+}
+
+task test {
+    doLast {
+        println 'This is executed during the execution phase.'
+    }
+}
+
+task testBoth {
+    doFirst {
+      println 'This is executed first during the execution phase.'
+    }
+    doLast {
+      println 'This is executed last during the execution phase.'
+    }
+    println 'This is executed during the configuration phase as well.'
+}
+
+println 'This is executed during the configuration phase last.'
+
+/*
+> gradle test testBoth
+This is executed during the initialization phase.
+This is executed during the configuration phase.
+This is also executed during the configuration phase.
+This is executed during the configuration phase as well.
+:test
+This is executed during the execution phase.
+:testBoth
+This is executed first during the execution phase.
+This is executed last during the execution phase.
+This is executed during the configuration phase last.
+
+BUILD SUCCESSFUL in 0s
+2 actionable tasks: 2 executed
+*/

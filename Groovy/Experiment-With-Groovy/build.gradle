@@ -1,0 +1,8 @@
+task experiment{}
+
+def foo="bar"
+println "$foo + foo = ${foo+"foo"}"
+
+def fruits=["Apple", "Orange","Banana"]
+println(fruits)
+println(fruits.collect{it*2})

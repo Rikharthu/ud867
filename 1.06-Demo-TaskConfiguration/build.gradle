@@ -84,11 +84,23 @@ also give the task a configuration closure when it's declared.
 task myTask6 {
     description "Here's a task with a configuration block" // this actually is a function call to a setter with exact same name (description("..."))
     group "Some group"
+    // group = "Some group" // almost the same
     // we are actually assigning a closure to be executed
     doLast {
         println "Here's the action"
     }
 }
+
+// Groovy compiler actually generates something like that:
+// Which is a project.task() function call that accepts task name and a configuration closure
+project.task('myTask6.5',{
+    description "Here is what is generated under the hood" 
+    group "Some group"
+   
+    doLast {
+        println "Here's the action 6.5"
+    }
+})
 
 /*
 

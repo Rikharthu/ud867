@@ -28,11 +28,14 @@ task hello(type: HelloTask)
 class HelloTask extends DefaultTask {
     @TaskAction
     void doAction() {
-        println 'Hello World'
+        logger.lifecycle 'Hello World'
     }
 }
 
-
+// gradle --stacktrace derpy
+// . . .
+// Caused by: org.gradle.internal.metaobject.AbstractDynamicObject$CustomMessageMissingMethodException: Could not find method primp() for arguments [Herp de derp] on task ':derpy' of type org.gradle.api.DefaultTask.
+// . . .
 task derpy << {
     primp "Herp de derp"
 }

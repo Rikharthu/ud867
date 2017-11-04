@@ -48,3 +48,6 @@ task sweetCoffee {
         println "Mmmm, sweet! just how I like it."
     }
 }
+
+// only blackCoffee and sweetCoffee will be seed in 'other tasks' since noone depends on them
+// and thus they might be used by the user

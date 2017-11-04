@@ -20,6 +20,17 @@ task printGreeting {
     }
 }
 
+// You can also pass parameters from the cli arguments such as
+// gradle -Pgreeting="Hello from the command line" printGreeting
+// These have higher priority than gradle.properties
+
+
+task greetMe{
+    doLast{
+        println "$greeting $username"
+    }
+}
+
 task printGoodbye {
     doLast {
        println goodbye // fetched from gradle.properties
@@ -60,7 +71,8 @@ that properties defined this way shadow all other definitions.
 
 */
 
-// pass closure to project.ext
+// pass closure to project.ext property
+// this shadows all other property definitions like from a properties files
 ext {
     //  greeting = "Hello from a properties file" would override gradle.properties and CLI arguments
     goodbye = "Goodbye from inside the build script"

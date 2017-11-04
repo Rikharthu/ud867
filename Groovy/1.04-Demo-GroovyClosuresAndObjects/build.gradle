@@ -74,6 +74,7 @@ def myList = ["Gradle", "Groovy", "Android"]
 // We can execute a closure for each item in the list.
 def printItem = {item -> println "List item: $item"}
 myList.each(printItem)
+myList.each({item -> println "List item: $item"})
 
 /*
 We can make this notation much more compact by declaring the closure in-
